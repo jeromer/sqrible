@@ -3,13 +3,13 @@ What is Sqrible ?
 Problematic
 -----------
 
-Sqrible came out of the [frustation](https://github.com/jackc/pgx/issues/253) for working with
+Sqrible came out of the [frustation](https://github.com/jackc/pgx/issues/253) of working with
 [pgx](https://github.com/jackc/pgx) and [sqlx](https://github.com/jmoiron/sqlx).
 
 I had to buid a [crappy bridge](https://github.com/jeromer/pgx/commit/5097a8100cb350853e1aa8bcf05787ff41c69216)
-which led to nowhere and this did not solve the problem
-that for every request pgx has to use Golang's reflection to map query results to struct
-fields.
+which led to nowhere and this did not solve the problem that for every request
+[sqlx](https://github.com/jmoiron/sqlx)has to use Golang's reflection to map
+query results to struct fields.
 
 This did not sound right.
 
@@ -27,7 +27,7 @@ How does it work ?
 ------------------
 
 Sqrible scans informations about a given table, reads what you configured for
-this table in a yaml config file and output the generated code you built in the
+this table in a yaml config file and output the generated code you built with the
 provided template.
 
 Building
@@ -209,6 +209,6 @@ You will see the following output:
     avatar_file_name text 10 False AvatarFileName pgtype.Text False True True True
 
 
-Since all the informations you need about a specific table it becomes easy to
+Since you have all the informations you need about a specific table it becomes easy to
 write some templates which will generate the Go code you need. The usage of
 [pongo2](https://github.com/flosch/pongo2) makes it relatively easy.
