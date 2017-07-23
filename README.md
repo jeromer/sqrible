@@ -1,5 +1,3 @@
-What is Sqrible ?
-
 Problematic
 -----------
 
