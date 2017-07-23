@@ -1,0 +1,6 @@
+bin/
+pkg/
+vendor/src/
+vendor/pkg
+sqrible.yml
+templates/

@@ -1,0 +1,23 @@
+{
+	"version": 0,
+	"dependencies": [
+		{
+			"importpath": "github.com/flosch/pongo2",
+			"repository": "https://github.com/flosch/pongo2",
+			"revision": "5e81b817a0c48c1c57cdf1a9056cf76bdee02ca9",
+			"branch": "HEAD"
+		},
+		{
+			"importpath": "github.com/jackc/pgx",
+			"repository": "https://github.com/jackc/pgx",
+			"revision": "9bd22f689ac9f0f5445fb5dad24569d5cadf1773",
+			"branch": "HEAD"
+		},
+		{
+			"importpath": "gopkg.in/yaml.v2",
+			"repository": "https://gopkg.in/yaml.v2",
+			"revision": "3b4ad1db5b2a649883ff3782f5f9f6fb52be71af",
+			"branch": "v2"
+		}
+	]
+}
