@@ -217,3 +217,19 @@ Other projects in this field
 - [pgxdata](https://github.com/jackc/pgxdata)  (which I used for inspiration)
 - [xo](https://github.com/knq/xo)
 - [genieql](https://bitbucket.org/jatone/genieql)
+
+FAQ
+===
+
+Do you plan to support other DBMSes ?
+-------------------------------------
+
+No. I only need Postgres support and do not plan to provide any support for
+MySQL, Oracle ... Have at look at [xo](https://github.com/knq/xo) ;)
+
+Do you provide base templates ?
+-------------------------------
+
+No. This kind of code is too much project specific. I prefer providing enough
+informations in the `Table` template variables, and an [example template](example.tpl)
+so people can do whatever they want for their project.
