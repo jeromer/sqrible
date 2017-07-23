@@ -212,3 +212,10 @@ You will see the following output:
 Since you have all the informations you need about a specific table it becomes easy to
 write some templates which will generate the Go code you need. The usage of
 [pongo2](https://github.com/flosch/pongo2) makes it relatively easy.
+
+Other projects in this area
+---------------------------
+
+- [pgxdata](https://github.com/jackc/pgxdata)  (which I used for inspiration)
+- [xo](https://github.com/knq/xo)
+- [genieql](https://bitbucket.org/jatone/genieql)
