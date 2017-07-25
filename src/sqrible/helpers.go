@@ -11,6 +11,10 @@ import (
 )
 
 func ProcessTable(c *pgx.Conn, n string, cfg Config) *Table {
+	if !tableExists(c, n) {
+		Quit(fmt.Errorf("Table %s not found", n))
+	}
+
 	cols, err := tableColumns(c, n, cfg)
 	if err != nil {
 		Quit(err)
@@ -44,6 +48,30 @@ func ApplyTemplate(t *Table, templateDir string, templateName string) ([]byte, e
 	return tpl.ExecuteBytes(pongo2.Context{
 		"Table": t,
 	})
+}
+
+func tableExists(c *pgx.Conn, n string) bool {
+	count := new(int)
+
+	err := c.QueryRow(
+		`SELECT COUNT(*)
+		 FROM pg_catalog.pg_class c
+			  LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+		 WHERE c.relkind IN ('r','v','m','S','f','')
+			  AND n.nspname <> 'pg_catalog'
+			  AND n.nspname <> 'information_schema'
+			  AND n.nspname !~ '^pg_toast'
+			  AND pg_catalog.pg_table_is_visible(c.oid)
+			  AND c.relname = $1;`,
+		n,
+	).Scan(count)
+
+	if err != nil {
+		Quit(err)
+		return false
+	}
+
+	return *count >= 1
 }
 
 func tableColumns(c *pgx.Conn, name string, cfg Config) ([]*Column, error) {
