@@ -199,6 +199,7 @@ func asPgxType(n string) string {
 		"inet":                     "pgtype.Inet",
 		"cidr":                     "pgtype.Cidr",
 		"bytea":                    "pgtype.Bytea",
+		"boolean":                  "pgtype.Bool",
 		"timestamp with time zone": "pgtype.Timestamptz",
 	}
 
