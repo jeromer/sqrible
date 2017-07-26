@@ -207,7 +207,8 @@ func asPgxType(n string) string {
 		return t
 	}
 
-	return "string"
+	Quit(fmt.Errorf("Postgres type %s not found in pgx mapping", n))
+	return ""
 }
 
 func isAcronym(s string) bool {
