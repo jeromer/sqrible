@@ -85,6 +85,7 @@ func tableColumns(c *pgx.Conn, name string, cfg Config) ([]*Column, error) {
 	rows, err := c.Query(
 		`SELECT column_name,
 				data_type,
+				udt_name,
 				ordinal_position
 		FROM information_schema.columns
 		WHERE table_name=$1
@@ -103,6 +104,7 @@ func tableColumns(c *pgx.Conn, name string, cfg Config) ([]*Column, error) {
 		err = rows.Scan(
 			&c.PGColumnName,
 			&c.PGDataType,
+			&c.PGUDTName,
 			&c.PGOrdinalPosition,
 		)
 
@@ -111,7 +113,7 @@ func tableColumns(c *pgx.Conn, name string, cfg Config) ([]*Column, error) {
 		}
 
 		c.GoFieldName = asGoFieldName(c.PGColumnName)
-		c.PgxType = asPgxType(c.PGDataType)
+		c.PgxType = asPgxType(c.PGDataType, c.PGUDTName)
 
 		c.Config = cfg.columnConfig(name, c.PGColumnName)
 		c.IsPK = colIsPk(c.PGColumnName, pks)
@@ -188,9 +190,10 @@ func asGoFieldName(n string) string {
 	return buf.String()
 }
 
-func asPgxType(n string) string {
+func asPgxType(n string, udt string) string {
 	m := map[string]string{
 		"bigint":                   "pgtype.Int8",
+		"int8":                     "pgtype.Int8",
 		"integer":                  "pgtype.Int4",
 		"smallint":                 "pgtype.Int2",
 		"character varying":        "pgtype.Varchar",
@@ -200,6 +203,7 @@ func asPgxType(n string) string {
 		"cidr":                     "pgtype.Cidr",
 		"bytea":                    "pgtype.Bytea",
 		"boolean":                  "pgtype.Bool",
+		"bool":                     "pgtype.Bool",
 		"real":                     "pgtype.Float4",
 		"double precision":         "pgtype.Float8",
 		"timestamp with time zone": "pgtype.Timestamptz",
@@ -208,6 +212,10 @@ func asPgxType(n string) string {
 	t, found := m[n]
 	if found {
 		return t
+	}
+
+	if strings.ToLower(n) == "array" {
+		return asPgxType(strings.ToLower(udt[1:]), "") + "Array"
 	}
 
 	Quit(fmt.Errorf("Postgres type %s not found in pgx mapping", n))

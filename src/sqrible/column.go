@@ -3,6 +3,7 @@ package sqrible
 type Column struct {
 	PGColumnName      string
 	PGDataType        string
+	PGUDTName         string
 	PGOrdinalPosition int32
 
 	IsPK bool
