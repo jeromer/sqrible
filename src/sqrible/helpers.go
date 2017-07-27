@@ -200,6 +200,8 @@ func asPgxType(n string) string {
 		"cidr":                     "pgtype.Cidr",
 		"bytea":                    "pgtype.Bytea",
 		"boolean":                  "pgtype.Bool",
+		"real":                     "pgtype.Float4",
+		"double precision":         "pgtype.Float8",
 		"timestamp with time zone": "pgtype.Timestamptz",
 	}
 
