@@ -39,7 +39,7 @@ func ApplyTemplate(t *Table, templateDir string, templateName string) ([]byte, e
 		return buff, err
 	}
 
-	tpl, err := s.FromCache(templateName)
+	tpl, err := s.FromFile(templateName)
 	if err != nil {
 		Quit(err)
 		return buff, err
