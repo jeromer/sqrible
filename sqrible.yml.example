@@ -1,0 +1,29 @@
+tables:
+  users:                     # table name
+    template: example.tpl    # template to use for this table
+    gostruct: User           # go struct which will be used for this table
+    tablecols:               # table column configuration
+      password:              # password is totally ignored
+        access: "-"
+
+      id:
+        access: s            # id can only be SELECTed
+        json: "custom_id_field"
+
+      uid:
+        access: s            # uid can only be SELECTed
+
+      creation_date:
+        access: s            # creation_date can only be selected
+
+      username:
+        access: i            # username can only be INSERTed (not available in SELECT nor UPDATE)
+
+      email:
+        access: siu           # email can be SELECTed INSERTed UPDATEd
+
+      enabled:
+        access: u            # enabled can only be UPDATEd (not availble in SELECT not INSERT)
+
+
+      # no configuration means : SELECTable, INSERTable, UPDATEable
