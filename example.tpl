@@ -10,8 +10,14 @@ Table:
 {% for c in cols %}{{ dump_column(c) }}{% endfor %}
 {% endmacro %}
 
-{% macro dump_column(c) %}
-{{ c.PGColumnName }} {{ c.PGDataType }} {{ c.PGOrdinalPosition }} {{ c.IsPK }} {{ c.GoFieldName }} {{ c.PgxType }}
+{% macro dump_column(c) %}PGColumnName      : {{ c.PGColumnName }}
+PGDataType        : {{ c.PGDataType }}
+PGOrdinalPosition : {{ c.PGOrdinalPosition }}
+IsPK              : {{ c.IsPK }}
+GoFieldName       : {{ c.GoFieldName }}
+PgxType           : {{ c.PgxType }}
+JSON              : {{ c.JSON}}
+
 {% endmacro %}
 
 SELECTable columns
@@ -32,6 +38,4 @@ Primary keys
 
 all columns
 -----------
-{% for c in Table.Columns %}
-{{ c.PGColumnName }} {{ c.PGDataType }} {{ c.PGOrdinalPosition }} {{ c.IsPK }} {{ c.GoFieldName }} {{ c.PgxType }} {{ c.IsConfigured }} {{ c.IsSelectable }} {{ c.IsInsertable }} {{ c.IsUpdateable}}
-{% endfor %}
+{% for c in Table.Columns%}{{ dump_column(c) }}{% endfor %}

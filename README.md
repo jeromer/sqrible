@@ -122,6 +122,7 @@ You can now run:
 
 You will see the following output:
 
+
     Example template
     ----------------
 
@@ -137,81 +138,242 @@ You will see the following output:
     SELECTable columns
     ------------------
 
+    PGColumnName      : id
+    PGDataType        : bigint
+    PGOrdinalPosition : 1
+    IsPK              : True
+    GoFieldName       : ID
+    PgxType           : pgtype.Int8
+    JSON              : custom_id_field
 
-    id bigint 1 True ID pgtype.Int8
+    PGColumnName      : uid
+    PGDataType        : text
+    PGOrdinalPosition : 2
+    IsPK              : False
+    GoFieldName       : UID
+    PgxType           : pgtype.Text
+    JSON              : uid
 
-    uid text 2 False UID pgtype.Text
+    PGColumnName      : email
+    PGDataType        : text
+    PGOrdinalPosition : 4
+    IsPK              : False
+    GoFieldName       : Email
+    PgxType           : pgtype.Text
+    JSON              : email
 
-    email text 4 False Email pgtype.Text
+    PGColumnName      : email_confirmed
+    PGDataType        : boolean
+    PGOrdinalPosition : 7
+    IsPK              : False
+    GoFieldName       : EmailConfirmed
+    PgxType           : pgtype.Bool
+    JSON              : email_confirmed
 
-    email_confirmed boolean 7 False EmailConfirmed pgtype.Bool
+    PGColumnName      : creation_date
+    PGDataType        : timestamp with time zone
+    PGOrdinalPosition : 8
+    IsPK              : False
+    GoFieldName       : CreationDate
+    PgxType           : pgtype.Timestamptz
+    JSON              : creation_date
 
-    creation_date timestamp with time zone 8 False CreationDate pgtype.Timestamptz
+    PGColumnName      : update_date
+    PGDataType        : timestamp with time zone
+    PGOrdinalPosition : 9
+    IsPK              : False
+    GoFieldName       : UpdateDate
+    PgxType           : pgtype.Timestamptz
+    JSON              : update_date
 
-    update_date timestamp with time zone 9 False UpdateDate pgtype.Timestamptz
+    PGColumnName      : avatar_file_name
+    PGDataType        : text
+    PGOrdinalPosition : 10
+    IsPK              : False
+    GoFieldName       : AvatarFileName
+    PgxType           : pgtype.Text
+    JSON              : avatar_file_name
 
-    avatar_file_name text 10 False AvatarFileName pgtype.Text
 
 
 
     INSERTable columns
     ------------------
 
+    PGColumnName      : email
+    PGDataType        : text
+    PGOrdinalPosition : 4
+    IsPK              : False
+    GoFieldName       : Email
+    PgxType           : pgtype.Text
+    JSON              : email
 
-    email text 4 False Email pgtype.Text
+    PGColumnName      : username
+    PGDataType        : text
+    PGOrdinalPosition : 5
+    IsPK              : False
+    GoFieldName       : Username
+    PgxType           : pgtype.Text
+    JSON              : username
 
-    username text 5 False Username pgtype.Text
+    PGColumnName      : email_confirmed
+    PGDataType        : boolean
+    PGOrdinalPosition : 7
+    IsPK              : False
+    GoFieldName       : EmailConfirmed
+    PgxType           : pgtype.Bool
+    JSON              : email_confirmed
 
-    email_confirmed boolean 7 False EmailConfirmed pgtype.Bool
+    PGColumnName      : update_date
+    PGDataType        : timestamp with time zone
+    PGOrdinalPosition : 9
+    IsPK              : False
+    GoFieldName       : UpdateDate
+    PgxType           : pgtype.Timestamptz
+    JSON              : update_date
 
-    update_date timestamp with time zone 9 False UpdateDate pgtype.Timestamptz
+    PGColumnName      : avatar_file_name
+    PGDataType        : text
+    PGOrdinalPosition : 10
+    IsPK              : False
+    GoFieldName       : AvatarFileName
+    PgxType           : pgtype.Text
+    JSON              : avatar_file_name
 
-    avatar_file_name text 10 False AvatarFileName pgtype.Text
 
 
 
     UPDATEable columns
     ------------------
 
+    PGColumnName      : email
+    PGDataType        : text
+    PGOrdinalPosition : 4
+    IsPK              : False
+    GoFieldName       : Email
+    PgxType           : pgtype.Text
+    JSON              : email
 
-    email text 4 False Email pgtype.Text
+    PGColumnName      : enabled
+    PGDataType        : boolean
+    PGOrdinalPosition : 6
+    IsPK              : False
+    GoFieldName       : Enabled
+    PgxType           : pgtype.Bool
+    JSON              : enabled
 
-    enabled boolean 6 False Enabled pgtype.Bool
+    PGColumnName      : email_confirmed
+    PGDataType        : boolean
+    PGOrdinalPosition : 7
+    IsPK              : False
+    GoFieldName       : EmailConfirmed
+    PgxType           : pgtype.Bool
+    JSON              : email_confirmed
 
-    email_confirmed boolean 7 False EmailConfirmed pgtype.Bool
+    PGColumnName      : update_date
+    PGDataType        : timestamp with time zone
+    PGOrdinalPosition : 9
+    IsPK              : False
+    GoFieldName       : UpdateDate
+    PgxType           : pgtype.Timestamptz
+    JSON              : update_date
 
-    update_date timestamp with time zone 9 False UpdateDate pgtype.Timestamptz
+    PGColumnName      : avatar_file_name
+    PGDataType        : text
+    PGOrdinalPosition : 10
+    IsPK              : False
+    GoFieldName       : AvatarFileName
+    PgxType           : pgtype.Text
+    JSON              : avatar_file_name
 
-    avatar_file_name text 10 False AvatarFileName pgtype.Text
 
 
 
     Primary keys
     ------------
+    PGColumnName      : id
+    PGDataType        : bigint
+    PGOrdinalPosition : 1
+    IsPK              : True
+    GoFieldName       : ID
+    PgxType           : pgtype.Int8
+    JSON              : custom_id_field
 
-    id bigint 1 True ID pgtype.Int8
 
 
     all columns
     -----------
+    PGColumnName      : id
+    PGDataType        : bigint
+    PGOrdinalPosition : 1
+    IsPK              : True
+    GoFieldName       : ID
+    PgxType           : pgtype.Int8
+    JSON              : custom_id_field
 
-    id bigint 1 True ID pgtype.Int8 True True False False
+    PGColumnName      : uid
+    PGDataType        : text
+    PGOrdinalPosition : 2
+    IsPK              : False
+    GoFieldName       : UID
+    PgxType           : pgtype.Text
+    JSON              : uid
 
-    uid text 2 False UID pgtype.Text True True False False
+    PGColumnName      : email
+    PGDataType        : text
+    PGOrdinalPosition : 4
+    IsPK              : False
+    GoFieldName       : Email
+    PgxType           : pgtype.Text
+    JSON              : email
 
-    email text 4 False Email pgtype.Text True True True True
+    PGColumnName      : username
+    PGDataType        : text
+    PGOrdinalPosition : 5
+    IsPK              : False
+    GoFieldName       : Username
+    PgxType           : pgtype.Text
+    JSON              : username
 
-    username text 5 False Username pgtype.Text True False True False
+    PGColumnName      : enabled
+    PGDataType        : boolean
+    PGOrdinalPosition : 6
+    IsPK              : False
+    GoFieldName       : Enabled
+    PgxType           : pgtype.Bool
+    JSON              : enabled
 
-    enabled boolean 6 False Enabled pgtype.Bool True False False True
+    PGColumnName      : email_confirmed
+    PGDataType        : boolean
+    PGOrdinalPosition : 7
+    IsPK              : False
+    GoFieldName       : EmailConfirmed
+    PgxType           : pgtype.Bool
+    JSON              : email_confirmed
 
-    email_confirmed boolean 7 False EmailConfirmed pgtype.Bool False True True True
+    PGColumnName      : creation_date
+    PGDataType        : timestamp with time zone
+    PGOrdinalPosition : 8
+    IsPK              : False
+    GoFieldName       : CreationDate
+    PgxType           : pgtype.Timestamptz
+    JSON              : creation_date
 
-    creation_date timestamp with time zone 8 False CreationDate pgtype.Timestamptz True True False False
+    PGColumnName      : update_date
+    PGDataType        : timestamp with time zone
+    PGOrdinalPosition : 9
+    IsPK              : False
+    GoFieldName       : UpdateDate
+    PgxType           : pgtype.Timestamptz
+    JSON              : update_date
 
-    update_date timestamp with time zone 9 False UpdateDate pgtype.Timestamptz False True True True
-
-    avatar_file_name text 10 False AvatarFileName pgtype.Text False True True True
+    PGColumnName      : avatar_file_name
+    PGDataType        : text
+    PGOrdinalPosition : 10
+    IsPK              : False
+    GoFieldName       : AvatarFileName
+    PgxType           : pgtype.Text
+    JSON              : avatar_file_name
 
 
 Since you have all the informations you need about a specific table it becomes easy to
