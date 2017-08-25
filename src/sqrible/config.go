@@ -7,7 +7,7 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
-type TableColumConfigFlag string
+type TableColumnConfigFlag string
 
 type TableColumnConfig struct {
 	IsIgnored    bool
@@ -17,9 +17,9 @@ type TableColumnConfig struct {
 }
 
 type TableConfig struct {
-	Template  string                          `yaml:"template"`
-	ColFlags  map[string]TableColumConfigFlag `yaml:"tablecols"`
-	TableCols map[string]TableColumnConfig    `yaml:"-"`
+	Template  string                           `yaml:"template"`
+	ColFlags  map[string]TableColumnConfigFlag `yaml:"tablecols"`
+	TableCols map[string]TableColumnConfig     `yaml:"-"`
 	GoStruct  string
 }
 
@@ -89,22 +89,22 @@ func ParseConfig(f string) Config {
 	return c
 }
 
-func (f TableColumConfigFlag) isIgnored() bool {
+func (f TableColumnConfigFlag) isIgnored() bool {
 	return f == "-"
 }
 
-func (f TableColumConfigFlag) isSelectable() bool {
+func (f TableColumnConfigFlag) isSelectable() bool {
 	return f.contains("s")
 }
 
-func (f TableColumConfigFlag) isInsertable() bool {
+func (f TableColumnConfigFlag) isInsertable() bool {
 	return f.contains("i")
 }
 
-func (f TableColumConfigFlag) isUpdateable() bool {
+func (f TableColumnConfigFlag) isUpdateable() bool {
 	return f.contains("u")
 }
 
-func (f TableColumConfigFlag) contains(s string) bool {
+func (f TableColumnConfigFlag) contains(s string) bool {
 	return strings.Contains(string(f), s)
 }
