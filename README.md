@@ -95,17 +95,24 @@ Which can be created with the following SQL:
 And a `sqrible.yml` configuration file with the following contents:
 
     tables:
-      users:                     # table name
-        template: example.tpl    # template to use for this table
-        gostruct: User           # go struct which will be used for this table
-        tablecols:               # table column configuration
-          id: s                  # id can only be SELECTed
-          uid: s                 # uid can only be SELECTed
-          password: "-"          # password is totally ignored
-          creation_date: s       # creation_date can only be selected
-          username: i            # username can only be INSERTed (not available in SELECT nor UPDATE)
-          enabled: u             # enabled can only be UPDATEd (not availble in SELECT not INSERT)
-          email: siu             # email can be SELECTed INSERTed UPDATEd
+      users:                  # table name
+        template: example.tpl # template to use for this table
+        gostruct: User        # go struct which will be used for this table
+        tablecols:            # table column configuration
+          id:
+            access: s         # id can only be SELECTed
+          uid:
+            access: s         # uid can only be SELECTed
+          password:
+            access: "-"       # password is totally ignored
+          creation_date:
+            access: s         # creation_date can only be selected
+          username:
+            access: i         # username can only be INSERTed (not available in SELECT nor UPDATE)
+          enabled:
+            access: u         # enabled can only be UPDATEd (not availble in SELECT not INSERT)
+          email:
+            access: siu       # email can be SELECTed INSERTed UPDATEd
 
           # no configuration means : SELECTable, INSERTable, UPDATEable
 
@@ -137,7 +144,7 @@ You will see the following output:
 
     email text 4 False Email pgtype.Text
 
-    email_confirmed boolean 7 False EmailConfirmed string
+    email_confirmed boolean 7 False EmailConfirmed pgtype.Bool
 
     creation_date timestamp with time zone 8 False CreationDate pgtype.Timestamptz
 
@@ -155,7 +162,7 @@ You will see the following output:
 
     username text 5 False Username pgtype.Text
 
-    email_confirmed boolean 7 False EmailConfirmed string
+    email_confirmed boolean 7 False EmailConfirmed pgtype.Bool
 
     update_date timestamp with time zone 9 False UpdateDate pgtype.Timestamptz
 
@@ -169,9 +176,9 @@ You will see the following output:
 
     email text 4 False Email pgtype.Text
 
-    enabled boolean 6 False Enabled string
+    enabled boolean 6 False Enabled pgtype.Bool
 
-    email_confirmed boolean 7 False EmailConfirmed string
+    email_confirmed boolean 7 False EmailConfirmed pgtype.Bool
 
     update_date timestamp with time zone 9 False UpdateDate pgtype.Timestamptz
 
@@ -196,9 +203,9 @@ You will see the following output:
 
     username text 5 False Username pgtype.Text True False True False
 
-    enabled boolean 6 False Enabled string True False False True
+    enabled boolean 6 False Enabled pgtype.Bool True False False True
 
-    email_confirmed boolean 7 False EmailConfirmed string False True True True
+    email_confirmed boolean 7 False EmailConfirmed pgtype.Bool False True True True
 
     creation_date timestamp with time zone 8 False CreationDate pgtype.Timestamptz True True False False
 
