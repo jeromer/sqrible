@@ -45,3 +45,11 @@ func (c *Column) IsUpdateable() bool {
 
 	return c.Config.IsUpdateable()
 }
+
+func (c *Column) JSON() string {
+	if !c.IsConfigured() || len(c.Config.JSON) <= 0 {
+		return c.PGColumnName
+	}
+
+	return c.Config.JSON
+}

@@ -62,6 +62,7 @@ func (c Config) columnConfig(tn string, cn string) *TableColumnConfigDetails {
 
 type TableColumnConfigDetails struct {
 	Access string `yaml:"access"`
+	JSON   string `yaml:"json"`
 }
 
 func (d TableColumnConfigDetails) IsIgnored() bool {
