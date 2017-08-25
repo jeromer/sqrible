@@ -11,11 +11,11 @@ type Column struct {
 	GoFieldName string
 	PgxType     string
 
-	Config *TableColumnConfig
+	Config *TableColumnConfigDetails
 }
 
 func (c *Column) isIgnored() bool {
-	return (c.IsConfigured() && c.Config.IsIgnored)
+	return (c.IsConfigured() && c.Config.IsIgnored())
 }
 
 func (c *Column) IsConfigured() bool {
@@ -27,7 +27,7 @@ func (c *Column) IsSelectable() bool {
 		return true
 	}
 
-	return c.Config.IsSelectable
+	return c.Config.IsSelectable()
 }
 
 func (c *Column) IsInsertable() bool {
@@ -35,7 +35,7 @@ func (c *Column) IsInsertable() bool {
 		return true
 	}
 
-	return c.Config.IsInsertable
+	return c.Config.IsInsertable()
 }
 
 func (c *Column) IsUpdateable() bool {
@@ -43,5 +43,5 @@ func (c *Column) IsUpdateable() bool {
 		return true
 	}
 
-	return c.Config.IsUpdateable
+	return c.Config.IsUpdateable()
 }

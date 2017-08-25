@@ -20,43 +20,12 @@ func ParseConfig(f string) Config {
 		Quit(err)
 	}
 
-	for tableName, tableConfig := range c.Tables {
-		newTableConfig := new(TableConfig)
-		*newTableConfig = tableConfig
-		newTableConfig.TableCols = make(
-			map[string]TableColumnConfig, len(tableConfig.ConfigDetails),
-		)
-
-		for colName, details := range tableConfig.ConfigDetails {
-			newTableConfig.TableCols[colName] = TableColumnConfig{
-				IsIgnored:    details.isIgnored(),
-				IsSelectable: details.isSelectable(),
-				IsInsertable: details.isInsertable(),
-				IsUpdateable: details.isUpdateable(),
-			}
-		}
-
-		c.Tables[tableName] = *newTableConfig
-	}
-
 	return c
-}
-
-type TableColumnConfigDetails struct {
-	Access string `yaml:"access"`
-}
-
-type TableColumnConfig struct {
-	IsIgnored    bool
-	IsSelectable bool
-	IsInsertable bool
-	IsUpdateable bool
 }
 
 type TableConfig struct {
 	Template      string                              `yaml:"template"`
 	ConfigDetails map[string]TableColumnConfigDetails `yaml:"tablecols"`
-	TableCols     map[string]TableColumnConfig        `yaml:"-"`
 	GoStruct      string
 }
 
@@ -77,33 +46,37 @@ func (c Config) TableConfigurationProvided(tn string) bool {
 	return c.tableConfig(tn) != nil
 }
 
-func (c Config) columnConfig(tn string, cn string) *TableColumnConfig {
+func (c Config) columnConfig(tn string, cn string) *TableColumnConfigDetails {
 	tc, hasCfg := c.Tables[tn]
 	if !hasCfg {
 		return nil
 	}
 
-	tcc, found := tc.TableCols[cn]
+	tcd, found := tc.ConfigDetails[cn]
 	if !found {
 		return nil
 	}
 
-	return &tcc
+	return &tcd
 }
 
-func (d TableColumnConfigDetails) isIgnored() bool {
+type TableColumnConfigDetails struct {
+	Access string `yaml:"access"`
+}
+
+func (d TableColumnConfigDetails) IsIgnored() bool {
 	return d.Access == "-"
 }
 
-func (d TableColumnConfigDetails) isSelectable() bool {
+func (d TableColumnConfigDetails) IsSelectable() bool {
 	return d.accessContains("s")
 }
 
-func (d TableColumnConfigDetails) isInsertable() bool {
+func (d TableColumnConfigDetails) IsInsertable() bool {
 	return d.accessContains("i")
 }
 
-func (d TableColumnConfigDetails) isUpdateable() bool {
+func (d TableColumnConfigDetails) IsUpdateable() bool {
 	return d.accessContains("u")
 }
 
