@@ -7,7 +7,44 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
-type TableColumnConfigFlag string
+func ParseConfig(f string) Config {
+	c := Config{}
+
+	data, err := ioutil.ReadFile(f)
+	if err != nil {
+		Quit(err)
+	}
+
+	err = yaml.Unmarshal([]byte(data), &c)
+	if err != nil {
+		Quit(err)
+	}
+
+	for tableName, tableConfig := range c.Tables {
+		newTableConfig := new(TableConfig)
+		*newTableConfig = tableConfig
+		newTableConfig.TableCols = make(
+			map[string]TableColumnConfig, len(tableConfig.ConfigDetails),
+		)
+
+		for colName, details := range tableConfig.ConfigDetails {
+			newTableConfig.TableCols[colName] = TableColumnConfig{
+				IsIgnored:    details.isIgnored(),
+				IsSelectable: details.isSelectable(),
+				IsInsertable: details.isInsertable(),
+				IsUpdateable: details.isUpdateable(),
+			}
+		}
+
+		c.Tables[tableName] = *newTableConfig
+	}
+
+	return c
+}
+
+type TableColumnConfigDetails struct {
+	Access string `yaml:"access"`
+}
 
 type TableColumnConfig struct {
 	IsIgnored    bool
@@ -17,10 +54,10 @@ type TableColumnConfig struct {
 }
 
 type TableConfig struct {
-	Template  string                           `yaml:"template"`
-	ColFlags  map[string]TableColumnConfigFlag `yaml:"tablecols"`
-	TableCols map[string]TableColumnConfig     `yaml:"-"`
-	GoStruct  string
+	Template      string                              `yaml:"template"`
+	ConfigDetails map[string]TableColumnConfigDetails `yaml:"tablecols"`
+	TableCols     map[string]TableColumnConfig        `yaml:"-"`
+	GoStruct      string
 }
 
 type Config struct {
@@ -54,57 +91,22 @@ func (c Config) columnConfig(tn string, cn string) *TableColumnConfig {
 	return &tcc
 }
 
-func ParseConfig(f string) Config {
-	c := Config{}
-
-	data, err := ioutil.ReadFile(f)
-	if err != nil {
-		Quit(err)
-	}
-
-	err = yaml.Unmarshal([]byte(data), &c)
-	if err != nil {
-		Quit(err)
-	}
-
-	for tableName, tableConfig := range c.Tables {
-		newTableConfig := new(TableConfig)
-		*newTableConfig = tableConfig
-		newTableConfig.TableCols = make(
-			map[string]TableColumnConfig, len(tableConfig.ColFlags),
-		)
-
-		for colName, flags := range tableConfig.ColFlags {
-			newTableConfig.TableCols[colName] = TableColumnConfig{
-				IsIgnored:    flags.isIgnored(),
-				IsSelectable: flags.isSelectable(),
-				IsInsertable: flags.isInsertable(),
-				IsUpdateable: flags.isUpdateable(),
-			}
-		}
-
-		c.Tables[tableName] = *newTableConfig
-	}
-
-	return c
+func (d TableColumnConfigDetails) isIgnored() bool {
+	return d.Access == "-"
 }
 
-func (f TableColumnConfigFlag) isIgnored() bool {
-	return f == "-"
+func (d TableColumnConfigDetails) isSelectable() bool {
+	return d.accessContains("s")
 }
 
-func (f TableColumnConfigFlag) isSelectable() bool {
-	return f.contains("s")
+func (d TableColumnConfigDetails) isInsertable() bool {
+	return d.accessContains("i")
 }
 
-func (f TableColumnConfigFlag) isInsertable() bool {
-	return f.contains("i")
+func (d TableColumnConfigDetails) isUpdateable() bool {
+	return d.accessContains("u")
 }
 
-func (f TableColumnConfigFlag) isUpdateable() bool {
-	return f.contains("u")
-}
-
-func (f TableColumnConfigFlag) contains(s string) bool {
-	return strings.Contains(string(f), s)
+func (d TableColumnConfigDetails) accessContains(s string) bool {
+	return strings.Contains(d.Access, s)
 }
