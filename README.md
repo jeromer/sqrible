@@ -17,9 +17,8 @@ So the solution is to generate go code that would do everything automatically.
 
 The advantages are:
 
-- I no longer need sqlx and thus limit reflection usage to pgx
-- With a set of template I can generate the code I need and update it easily
-  with a few template changes
+- I no longer need [sqlx](https://github.com/jmoiron/sqlx) and thus limit reflection usage to [pgx](https://github.com/jackc/pgx)
+- With a set of template I can generate the code I need and update it easily with a few template changes
 
 How does it work ?
 ------------------
