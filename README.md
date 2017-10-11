@@ -52,6 +52,11 @@ Have a look in the `examples` directory which contains one simple template
 which showcases informations sqrible has about a table. The `advanced` example
 showcases a more real life usage.
 
+Demo
+----
+
+<a href="https://asciinema.org/a/UM4BUS1rL0EnT3OhcMLlQccVF"><img src="https://asciinema.org/a/UM4BUS1rL0EnT3OhcMLlQccVF.png" width="700"/></a>
+
 Other projects in this field
 ----------------------------
 
