@@ -200,7 +200,7 @@ func asPgxType(n string, udt string) string {
 		"text":                     "pgtype.Text",
 		"date":                     "pgtype.Date",
 		"inet":                     "pgtype.Inet",
-		"cidr":                     "pgtype.Cidr",
+		"cidr":                     "pgtype.CIDR",
 		"bytea":                    "pgtype.Bytea",
 		"boolean":                  "pgtype.Bool",
 		"bool":                     "pgtype.Bool",
