@@ -224,7 +224,7 @@ func asPgxType(n string, udt string) string {
 
 func isAcronym(s string) bool {
 	acronyms := []string{
-		"id", "ip", "url", "uid",
+		"id", "ip", "url", "uid", "os",
 	}
 
 	for _, a := range acronyms {
