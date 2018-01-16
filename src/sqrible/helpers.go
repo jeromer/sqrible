@@ -192,26 +192,40 @@ func asGoFieldName(n string) string {
 
 func asPgxType(n string, udt string) string {
 	m := map[string]string{
-		"bigint":                   "pgtype.Int8",
-		"int8":                     "pgtype.Int8",
-		"integer":                  "pgtype.Int4",
-		"smallint":                 "pgtype.Int2",
-		"character varying":        "pgtype.Varchar",
-		"text":                     "pgtype.Text",
-		"date":                     "pgtype.Date",
-		"inet":                     "pgtype.Inet",
-		"cidr":                     "pgtype.CIDR",
-		"bytea":                    "pgtype.Bytea",
-		"boolean":                  "pgtype.Bool",
-		"bool":                     "pgtype.Bool",
-		"real":                     "pgtype.Float4",
-		"double precision":         "pgtype.Float8",
-		"timestamp with time zone": "pgtype.Timestamptz",
+		"bigint":                      "pgtype.Int8",
+		"int8":                        "pgtype.Int8",
+		"integer":                     "pgtype.Int4",
+		"smallint":                    "pgtype.Int2",
+		"character varying":           "pgtype.Varchar",
+		"text":                        "pgtype.Text",
+		"date":                        "pgtype.Date",
+		"inet":                        "pgtype.Inet",
+		"cidr":                        "pgtype.CIDR",
+		"bytea":                       "pgtype.Bytea",
+		"boolean":                     "pgtype.Bool",
+		"bool":                        "pgtype.Bool",
+		"real":                        "pgtype.Float4",
+		"double precision":            "pgtype.Float8",
+		"uuid":                        "pgtype.UUID",
+		"timestamp without time zone": "pgtype.Timestamp",
+		"timestamp with time zone":    "pgtype.Timestamptz",
+		"citext":                      "pgtype.Text",
+		"jsonb":                       "pgtype.JSONB",
+		"geography":                   "pgtype.Point",
+		"tsvector":                    "pgtype.Text",
 	}
 
 	t, found := m[n]
 	if found {
 		return t
+	}
+
+	// udt should work for user defined types such as geography and citext
+	if n == "USER-DEFINED" {
+		t, found := m[udt]
+		if found {
+			return t
+		}
 	}
 
 	if strings.ToLower(n) == "array" {
