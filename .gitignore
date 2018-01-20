@@ -5,3 +5,4 @@ vendor/pkg
 sqrible.yml
 templates/
 examples/advanced/generated.go
+/go_build_main_go.exe

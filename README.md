@@ -1,3 +1,13 @@
+This is a heavily modified version of sqrible - and a work in progress. 
+Do not use unless you like the following changes and can customize to your needs.   
+
+* Automatic detection of nullable fields
+* Chooses different data types to be used for nullable fields. 
+* Added "package" variable to the table yaml which I needed in my templates
+* Changed transposition of data types away from pgx - this is a work in progress
+* Detection of data types handles user defined types - this is a work in progress
+
+
 Problematic
 -----------
 

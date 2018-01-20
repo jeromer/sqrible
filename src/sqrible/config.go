@@ -4,7 +4,7 @@ import (
 	"io/ioutil"
 	"strings"
 
-	yaml "gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v2"
 )
 
 func ParseConfig(f string) Config {
@@ -27,6 +27,7 @@ type TableConfig struct {
 	Template      string                              `yaml:"template"`
 	ConfigDetails map[string]TableColumnConfigDetails `yaml:"tablecols"`
 	GoStruct      string
+	Package       string                              `yaml:"package"`
 }
 
 type Config struct {
