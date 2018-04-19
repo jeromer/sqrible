@@ -86,7 +86,9 @@ func tableColumns(c *pgx.Conn, name string, cfg Config) ([]*Column, error) {
 		`SELECT column_name,
 				data_type,
 				udt_name,
-				ordinal_position
+				ordinal_position,
+				is_nullable, 
+				is_updatable
 		FROM information_schema.columns
 		WHERE table_name=$1
 		ORDER BY ordinal_position ASC`,
@@ -106,6 +108,8 @@ func tableColumns(c *pgx.Conn, name string, cfg Config) ([]*Column, error) {
 			&c.PGDataType,
 			&c.PGUDTName,
 			&c.PGOrdinalPosition,
+			&c.PGIsNullable,
+			&c.PGIsUpdatable,
 		)
 
 		if err != nil {
@@ -113,7 +117,7 @@ func tableColumns(c *pgx.Conn, name string, cfg Config) ([]*Column, error) {
 		}
 
 		c.GoFieldName = asGoFieldName(c.PGColumnName)
-		c.PgxType = asPgxType(c.PGDataType, c.PGUDTName)
+		c.PgxType = asPgxType(c.PGDataType, c.PGUDTName, c.PGIsNullable)
 
 		c.Config = cfg.columnConfig(name, c.PGColumnName)
 		c.IsPK = colIsPk(c.PGColumnName, pks)
@@ -190,32 +194,97 @@ func asGoFieldName(n string) string {
 	return buf.String()
 }
 
-func asPgxType(n string, udt string) string {
-	m := map[string]string{
-		"bigint":                   "pgtype.Int8",
-		"int8":                     "pgtype.Int8",
-		"integer":                  "pgtype.Int4",
-		"smallint":                 "pgtype.Int2",
-		"character varying":        "pgtype.Varchar",
-		"text":                     "pgtype.Text",
-		"date":                     "pgtype.Date",
-		"inet":                     "pgtype.Inet",
-		"cidr":                     "pgtype.CIDR",
-		"bytea":                    "pgtype.Bytea",
-		"boolean":                  "pgtype.Bool",
-		"bool":                     "pgtype.Bool",
-		"real":                     "pgtype.Float4",
-		"double precision":         "pgtype.Float8",
-		"timestamp with time zone": "pgtype.Timestamptz",
+func asPgxType(n string, udt string, nullable string) string {
+	// These are the field transpositions IF
+	// the field is marked nullable
+
+	nulls := map[string]string{
+		"int16":             "dat.NullInt64",
+		"int8":              "dat.NullInt64",
+		"bigint":            "dat.NullInt64",
+		"bigserieal":        "dat.NullInt64",
+		"int4":              "dat.NullInt64",
+		"int":               "dat.NullInt64",
+		"serial":            "dat.NullInt64",
+		"int2":              "dat.NullInt64",
+		"smallint":          "dat.NullInt64",
+		"smallserial":       "dat.NullInt64",
+		"double precision":  "dat.NullFloat64",
+		"real":              "dat.NullFloat64",
+		"bool":              "bool",
+		"boolean":           "bool",
+		"text":              "dat.NullString",
+		"varchar":           "dat.NullString",
+		"citext":            "dat.NullString",
+		"character varying": "dat.NullString",
+		"timestamp":         "dat.NullTime",
+		"inet":              "inet",
+		"uuid":              "uuid.UUID",
+		"bytea":             "pgtype.ByteaArray",
+		"jsonb":             "dat.JSON",
+		"geography":         "pgtype.Point",
+		"tsvector":          "dat.NullString",
 	}
 
-	t, found := m[n]
-	if found {
-		return t
+	full := map[string]string{
+
+
+		"int16":             "int16",
+		"int8":              "int8",
+		"bigint":            "int8",
+		"bigserieal":        "int8",
+		"int4":              "int",
+		"int":               "int",
+		"serial":            "int",
+		"int2":              "int",
+		"smallint":          "int",
+		"smallserial":       "int",
+		"double precision":  "float64",
+		"real":              "float64",
+		"bool":              "bool",
+		"boolean":           "bool",
+		"text":              "string",
+		"varchar":           "string",
+		"citext":            "string",
+		"character varying": "string",
+		"timestamp":         "dat.NullTime",
+		"inet":              "inet",
+		"uuid":              "uuid.UUID",
+		"bytea":             "[][]byte",
+		"jsonb":             "dat.JSON",
+		"geography":         "pgtype.Point",
+		"tsvector":          "string",
+	}
+
+	if nullable == "YES" {
+
+		t, found := nulls[udt]
+		if found {
+			return t
+		}
+		if !found {
+			t, found := nulls[n]
+			if found {
+				return t
+			}
+		}
+	} else {
+
+		t, found := full[udt]
+		if found {
+			return t
+		}
+
+		if !found {
+			t, found := full[n]
+			if found {
+				return t
+			}
+		}
 	}
 
 	if strings.ToLower(n) == "array" {
-		return asPgxType(strings.ToLower(udt[1:]), "") + "Array"
+		return asPgxType(strings.ToLower(udt[1:]), udt, nullable) + "Array"
 	}
 
 	Quit(fmt.Errorf("Postgres type %s not found in pgx mapping", n))

@@ -5,6 +5,7 @@ type Table struct {
 	Columns      Columns
 	GoStructName string
 	Template     string
+	Package      string
 }
 
 func NewTable(name string, cols Columns, cfg *TableConfig) *Table {
@@ -13,6 +14,7 @@ func NewTable(name string, cols Columns, cfg *TableConfig) *Table {
 		Columns:      cols,
 		GoStructName: cfg.GoStruct,
 		Template:     cfg.Template,
+		Package:      cfg.Package,
 	}
 }
 

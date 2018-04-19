@@ -4,7 +4,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"sqrible"
+	"sqrible/src/sqrible"
 
 	"github.com/jackc/pgx"
 )

@@ -5,6 +5,8 @@ type Column struct {
 	PGDataType        string
 	PGUDTName         string
 	PGOrdinalPosition int32
+	PGIsUpdatable     string
+	PGIsNullable      string
 
 	IsPK bool
 
