@@ -60,7 +60,7 @@ func pgConnConfig() pgx.ConnConfig {
 
 func checkFlags() {
 	if len(*configFile) <= 0 {
-		sqrible.Quit(errors.New("-f flag not provided"))
+		sqrible.Quit(errors.New("-c flag not provided"))
 	}
 
 	if len(*tableName) <= 0 {
