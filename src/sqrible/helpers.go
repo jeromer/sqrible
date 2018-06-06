@@ -207,6 +207,7 @@ func asPgxType(n string, udt string) string {
 		"real":                     "pgtype.Float4",
 		"double precision":         "pgtype.Float8",
 		"timestamp with time zone": "pgtype.Timestamptz",
+		"jsonb":                    "pgtype.JSONB",
 	}
 
 	t, found := m[n]
